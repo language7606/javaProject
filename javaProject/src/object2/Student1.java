@@ -8,10 +8,6 @@ public class Student1 {
 	private int math;
 
 //	2) 3명정도 값을 저장. (홍길동, 90, 85), (김길동, 88, 85), (이길동, 76, 90)
-	Student1() {
-		;
-	}
-
 	Student1(String name, int eng, int math) {
 		this.name = name;
 		this.eng = eng;
@@ -41,18 +37,20 @@ public class Student1 {
 			this.math = math;
 		}
 	}
-	
+
 	public int getEng() {
 		return this.eng;
 	}
+
 	public int getMath() {
 		return this.math;
 	}
+
 	public String getName() {
 		return this.name;
-	
+	}
+}
 //	3) 학생의 정보를 저장할 수 있도록 배열.
 //	4) 전체 정보를 보여주도록 ( 이름 - 영어 - 수학 - 합계) 메소드.(showInfo)
 //	Student1.java => Student1Exam.java
 //	
-}

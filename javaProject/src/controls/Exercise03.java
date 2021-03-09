@@ -2,14 +2,15 @@ package controls;
 
 public class Exercise03 {
 	public static void main(String[] args) {
-		int n = 0;
-
-		for (int i = 1; i <= 100; i++) {
-			if (i % 3 != 0) {
+		int sum = 0;
+		
+		for (int i=0;i<=100;i++) {
+			if (0 != i%3) {
 				continue;
+			}else {
+				sum = sum+ i;
 			}
-			n = n + i;
 		}
-		System.out.println("3의 배수의 합: " + n);
+		System.out.println("3의 배수의 합: " + sum);
 	}
 }

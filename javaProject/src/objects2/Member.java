@@ -54,7 +54,6 @@ public class Member {
 			if (rentBooks[i] != null) {
 				result = result + "/" + rentBooks[i].getBookTitle();
 			}
-			return result;
 		}
 	}
 }

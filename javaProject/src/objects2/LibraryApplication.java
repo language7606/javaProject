@@ -19,13 +19,13 @@ public class LibraryApplication {
 			System.out.println("---------------------------------------------------------------------");
 			System.out.println("선택> ");
 			int selectNo = scn.nextInt();
-//			if (selectNo != 1) {
-//				System.out.println("책 제목을 입력하세요.");
-//			} for (i=0;i<bookList.length;i++) {
-//					
-//				System.out.println();
-//				continue;
+			if (selectNo != 1) {
+				System.out.println("책 제목을 입력하세요.");
+			} for (i=0;i<bookList.length;i++) {
+					
+				System.out.println();
+				continue;
 				}
 			}
 	}
-
+}

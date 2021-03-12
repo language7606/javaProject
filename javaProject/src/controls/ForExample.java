@@ -8,7 +8,7 @@ public class ForExample {
 				sum = sum + i;
 			}
 		}
-		System.out.println("1~10의 합: "+sum);
+		System.out.println("1~10중에서 짝수 합: "+sum);
 	}
 
 }

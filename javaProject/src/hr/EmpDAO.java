@@ -1,47 +1,106 @@
 package hr;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
 public class EmpDAO {
 	Connection conn = null;
 
 	EmpDAO() {
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		String user = "hr";
-		String passwd = "hr";
+		String path = "config/database.properties";
+		Properties prop = new Properties();
+		FileReader fr = null;
+		try {
+			fr = new FileReader(path);
+			try {
+				prop.load(fr);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		String url = prop.getProperty("url");
+		String user = prop.getProperty("user");
+		String passwd = prop.getProperty("pass");
+
 		conn = DBUtil.getConnection(url, user, passwd);
 	}
 
-	public Department[] deptList() {
-		PreparedStatement psmt = null;
+	public Map<String, String> getJobList() {
+		String sql = "select * from jobs";
+		Statement stmt = null;
 		ResultSet rs = null;
-		String sql = "select * from departments";
-		Department[] departments = new Department[100];
+		Map<String, String> map = new HashMap<>();
 		try {
-			psmt = conn.prepareStatement(sql);
-			rs = psmt.executeQuery();
-			int i = 0;
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				Department dep = new Department();
-				dep.setDepartmentId(rs.getInt("department_id"));
-				dep.setDepartmentName(rs.getString("department_name"));
-				dep.setManagerId(rs.getInt("manager_id"));
-				dep.setLocationId(rs.getInt("location_id"));
-				// System.out.println(emp.toString());
-				// System.out.println("------------------------------");
-				departments[i++] = dep;
+				map.put(rs.getString("job_id"), rs.getString("job_title"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			DBUtil.close(rs, psmt, conn);
+			DBUtil.close(rs, stmt, conn);
 		}
-		System.out.println("메소드 호출 완료");
-		return departments;
+		return map;
 	}
+
+	public Set<Employee> getEmps() {
+		String sql = "select * from emp_java";
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				Employee emp = new Employee();
+				emp.setFirstName(rs.getString("first_name"));
+				emp.setLastName(rs.getString("last_name"));
+				emp.setEmployeeId(rs.getString("employee_id"));
+				emp.setSalary(rs.getString("salary"));
+				set.add(emp);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}
+//	public Department[] deptList() {
+//		PreparedStatement psmt = null;
+//		ResultSet rs = null;
+//		String sql = "select * from departments";
+//		Department[] departments = new Department[100];
+//		try {
+//			psmt = conn.prepareStatement(sql);
+//			rs = psmt.executeQuery();
+//			int i = 0;
+//			while (rs.next()) {
+//				Department dep = new Department();
+//				dep.setDepartmentId(rs.getInt("department_id"));
+//				dep.setDepartmentName(rs.getString("department_name"));
+//				dep.setManagerId(rs.getInt("manager_id"));
+//				dep.setLocationId(rs.getInt("location_id"));
+//				// System.out.println(emp.toString());
+//				// System.out.println("------------------------------");
+//				departments[i++] = dep;
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			DBUtil.close(rs, psmt, conn);
+//		}
+//		System.out.println("메소드 호출 완료");
+//		return departments;
+//	}
 //
 //	public Employee[] empList() {
 //		PreparedStatement psmt = null;
@@ -74,4 +133,4 @@ public class EmpDAO {
 //		System.out.println("메소드 호출 완료");
 //		return employees;
 //	}
-}
+//}

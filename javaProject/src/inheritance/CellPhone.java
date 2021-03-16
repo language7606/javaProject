@@ -8,27 +8,26 @@ public class CellPhone {
 
 	// 메소드
 	void powerOn() {
-		System.out.println("CellPhone 전원을 켭니다.");
-	}
-
-	void bell() {
-		System.out.println("CellPhone 벨이 울립니다.");
-	}
-
-	void hangUp() {
-		System.out.println("CellPhone 전화를 끊습니다.");
+		System.out.println("켜");
 	}
 
 	void powerOff() {
-		System.out.println("CellPhone 전원을 끕니다.");
+		System.out.println("꺼");
 	}
 
-	void commonMethod() {
-		System.out.println("모델: " + model + ", 색상: " + color);
+	void bell() {
+		System.out.println("벨");
 	}
 
-	@Override
-	public String toString() {
-		return "CellPhone => model : " + model + "\t" + " color : " + color;
+	void sendVoice(String message) {
+		System.out.println("본인 : " + message);
+	}
+
+	void receiveVoice(String message) {
+		System.out.println("상대방 : " + message);
+	}
+
+	void hangUp() {
+		System.out.println("끊어");
 	}
 }

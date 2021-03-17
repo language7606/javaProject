@@ -1,4 +1,4 @@
-package abstractCalsses;
+package abstractCalsses.animal;
 
 public class Bird extends Animal {
 

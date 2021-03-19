@@ -14,10 +14,10 @@ public class DiaryApp {
 			menuNum = menuChoose();
 			process(menuNum);
 		} while (menuNum != 0);
-		System.out.println("ÇÁ·Î±×·¥ Á¾·á");
+		System.out.println("í”„ë¡œê·¸ë¨ ì¢…ë£Œ");
 	}
 
-	// ¸Ş´º Ãâ·Â
+	// ë©”ë‰´ ì¶œë ¥
 	public void menuPrint() {
 		Menu[] arr = Menu.values();
 		int i = 0;
@@ -28,7 +28,7 @@ public class DiaryApp {
 		System.out.println();
 	}
 
-	// ¸Ş´º ¼±ÅÃ
+	// ë©”ë‰´ ì„ íƒ
 	private int menuChoose() {
 		int menuSize = Menu.values().length - 1;
 		int menuNum;
@@ -36,79 +36,114 @@ public class DiaryApp {
 			menuNum = StdInputUtil.readInt();
 			if (menuNum <= menuSize)
 				break;
-			System.out.println(menuSize + " ±îÁö¸¸ ÀÔ·ÂÀÌ °¡´ÉÇÕ´Ï´Ù.");
+			System.out.println(menuSize + " ê¹Œì§€ë§Œ ì…ë ¥ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤.");
 		} while (true);
 		return menuNum;
 	}
 
-	// ¸Ş´º ½ÇÇà
+	// ë©”ë‰´ ì‹¤í–‰
 	public void process(int menuNum) {
 		Menu menu = Menu.getMenu(menuNum);
 		switch (menu) {
-		case Á¾·á:
+		case ì¢…ë£Œ:
 			exit();
 			break;
-		case Ãß°¡:
+		case ì¶”ê°€:
 			insert();
 			break;
-		case ¼öÁ¤:
+		case ìˆ˜ì •:
 			update();
 			break;
-		case »èÁ¦:
+		case ì‚­ì œ:
 			delete();
 			break;
-		case ÀüÃ¼Á¶È¸:
+		case ì „ì²´ì¡°íšŒ:
 			selectAll();
+			break;
+		case ë‚ ì§œê²€ìƒ‰:
+			selectDate();
+			break;
+		case ë‚´ìš©ê²€ìƒ‰:
+			selectContent();
 			break;
 		}
 	}
 
-	// ÀÔ·Â
+	// ì…ë ¥
 	public void insert() {
-		System.out.println("ÀÔ·Â>>");
-		System.out.println("³¯Â¥:[yyMMdd]");
+		System.out.println("ì¶”ê°€>>");
+		System.out.println("ë‚ ì§œ:[yyMMdd]");
 		String wdate = StdInputUtil.readDate();
-		System.out.print("³»¿ë: ");
+		System.out.print("ë‚´ìš©: ");
 		String contents = StdInputUtil.readMultiLine();
 
 		DiaryVO vo = new DiaryVO();
 		vo.setWdate(wdate);
 		vo.setContents(contents);
 		int cnt = dao.insert(vo);
-		System.out.println(cnt + "ÀÔ·Â ¿Ï·á");
+		System.out.println(cnt + "ì¶”ê°€ ì™„ë£Œ");
 	}
 
-	// ¼öÁ¤
+	// ìˆ˜ì •
 	public void update() {
-		System.out.println("¼öÁ¤¼±ÅÃ>>");
-		System.out.println("³¯Â¥:[yyMMdd]");
+		System.out.println("ìˆ˜ì •>>");
+		System.out.println("ë‚ ì§œ[yyMMdd] : ");
 		String wdate = StdInputUtil.readDate();
-		System.out.println("¼öÁ¤³¯Â¥:[yyMMdd]");
+		System.out.println("ë‚ ì§œìˆ˜ì •[yyMMdd]>> ");
+		String udate = StdInputUtil.readDate();
+		dao.update(udate);
+		System.out.println("ë‚´ìš©ìˆ˜ì •: ");
+		String ucontents = StdInputUtil.readDate();
+		dao.update(ucontents);
 		
-		int u =dao.update();
 		
 	}
 
-	// »èÁ¦
+	// ì‚­ì œ
 	public void delete() {
-		System.out.println("»èÁ¦¼±ÅÃ>>");
-		System.out.println("³¯Â¥:[yyMMdd]");
+		System.out.println("ì‚­ì œ>>");
+		System.out.println("ë‚ ì§œ:[yyMMdd]");
 		String wdate = StdInputUtil.readDate();
 		int r = dao.delete(wdate);
-		System.out.println(r + "°Ç »èÁ¦µÊ.");
+		System.out.println(r + "ê±´ ì‚­ì œë¨.");
 	}
 
-	// ÀüÃ¼Á¶È¸
+	// ì „ì²´ì¡°íšŒ
 	public void selectAll() {
-		System.out.println("ÀüÃ¼¼±ÅÃ>>");
+		System.out.println("ì „ì²´ì¡°íšŒì„ íƒ>>");
 		for (DiaryVO vo : dao.selectAll()) {
-			System.out.println(vo.getWdate());
-			System.out.println(vo.getContents());
+			print(vo);
 		}
 	}
 
-	// Á¾·á
+	// ë‚ ì§œë¡œ ì¡°íšŒ
+	public void selectDate() {
+		System.out.println("ë‚ ì§œê²€ìƒ‰>>");
+		System.out.println("ë‚ ì§œ:[yyMMdd]");
+		String wdate = StdInputUtil.readDate();
+		DiaryVO vo = dao.selectDate(wdate);
+
+		if (vo != null) {
+			print(vo);
+		} else
+			System.out.println("ì—†ëŠ” ë‚ ì§œì…ë‹ˆë‹¤.");
+	}
+
+	// ë‚´ìš©ìœ¼ë¡œ ê²€ìƒ‰
+	public void selectContent() {
+		System.out.println("ë‚´ìš©ê²€ìƒ‰>>");
+
+	}
+
+	public void print(DiaryVO vo) {
+		System.out.println("ë‚ ì§œ : " + vo.getWdate());
+		System.out.println("ë‚´ìš© : " + vo.getContents());
+		System.out.println("-------------------------------");
+
+	}
+
+	// ì¢…ë£Œ
 	public void exit() {
-		System.out.println("Á¾·á>>");
+		System.out.println("ì¢…ë£Œ>>");
 	}
 }

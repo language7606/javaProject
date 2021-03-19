@@ -18,7 +18,7 @@ public class DiaryListDAO implements DAO {
 
 	public DiaryListDAO() {
 		filePath = System.getProperty("user.home") + "/" + fileName;
-		readFile(); // ÆÄÀÏ ÃÊ±âÈ­
+		readFile(); // íŒŒì¼ ì´ˆê¸°í™”
 	}
 
 	@SuppressWarnings("unchecked")
@@ -33,7 +33,7 @@ public class DiaryListDAO implements DAO {
 				ObjectInputStream ois = new ObjectInputStream(bis);
 
 				list = (List<DiaryVO>) ois.readObject();
-				System.out.println((list != null ? list.size() : 0) + "°Ç readµÊ");
+				System.out.println((list != null ? list.size() : 0) + "ê±´ readë¨");
 				ois.close();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -49,7 +49,7 @@ public class DiaryListDAO implements DAO {
 
 			oos.writeObject(list);
 			oos.close();
-//			System.out.println("ÀúÀåµÊ");
+//			System.out.println("ì €ì¥ë¨");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -59,17 +59,16 @@ public class DiaryListDAO implements DAO {
 	@Override
 	public int insert(DiaryVO vo) {
 		int cnt = list.size();
-		int ii = 0;
 		for (int i = 0; i < cnt; i++) {
-			// Áßº¹³¯Â¥ ÀÔ·ÂºÒ°¡.
-			if (list.get(i).getWdate().equals(vo.getWdate())) {
+			// ì¤‘ë³µë‚ ì§œ ì…ë ¥ë¶ˆê°€.
+			if (list.get(cnt - 1).getWdate().equals(vo.getWdate())) {
 				return 0;
 			}
-			if (list.get(i).getWdate().compareTo(vo.getWdate()) > 0) {
+			if (list.get(cnt - 1).getWdate().compareTo(vo.getWdate()) < 0) {
 				break;
 			}
 		}
-		list.add(ii, vo);
+		list.add(cnt, vo);
 		writeFile();
 
 		return 1;
@@ -77,13 +76,20 @@ public class DiaryListDAO implements DAO {
 
 	@Override
 	public void update(DiaryVO vo) {
+		int cnt = list.size();
+		for (int i = 0; i < cnt; i++) {
+			if (list.get(i).getWdate().equals(vo.getWdate())) {
+				list.get(i).setContents(vo.getContents());
+				writeFile();
+			}
+		}
 	}
 
 	@Override
 	public int delete(String date) {
 		int cnt = list.size();
 		for (int i = 0; i < cnt; i++) {
-			if(list.get(i).getWdate().equals(date)) {
+			if (list.get(i).getWdate().equals(date)) {
 				list.remove(i);
 				writeFile();
 				return 1;
@@ -94,7 +100,13 @@ public class DiaryListDAO implements DAO {
 
 	@Override
 	public DiaryVO selectDate(String date) {
-		return null;
+		int cnt = list.size();
+		for (int i = 0; i < cnt; i++) {
+			if (list.get(i).getWdate().equals(date)) {
+				return list.get(i);
+			}
+			
+		}return null;
 	}
 
 	@Override

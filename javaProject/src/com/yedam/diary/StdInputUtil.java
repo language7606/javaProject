@@ -18,13 +18,13 @@ public class StdInputUtil {
 				break;
 			} catch (Exception e) {
 //			e.printStackTrace();
-				System.out.println("¼ıÀÚ Çü½ÄÀÌ ¾Æ´Õ´Ï´Ù.");
+				System.out.println("ìˆ«ì í˜•ì‹ì´ ì•„ë‹™ë‹ˆë‹¤.");
 			}
 		} while (true);
 		return result;
 	}
 
-	// ³¯Â¥ ÀÔ·Â
+	// ë‚ ì§œ ì…ë ¥
 	public static String readDate() {
 		String result = "";
 		do {
@@ -34,13 +34,13 @@ public class StdInputUtil {
 				break;
 			} catch (Exception e) {
 //			e.printStackTrace();
-				System.out.println("³¯Â¥ Çü½ÄÀÌ ¾Æ´Õ´Ï´Ù.");
+				System.out.println("ë‚ ì§œ í˜•ì‹ì´ ì•„ë‹™ë‹ˆë‹¤.");
 			}
 		} while (true);
 		return result;
 	}
 
-	// ¿©·¯ÁÙ ÀÔ·Â
+	// ì—¬ëŸ¬ì¤„ ì…ë ¥
 	public static String readMultiLine() {
 		StringBuffer result = new StringBuffer();
 		try {

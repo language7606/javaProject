@@ -13,8 +13,8 @@ class A {
 		}
 
 		int field1;
-
 		// static int field2;
+		
 		void method1() {
 		}
 		// static void method2(){}
@@ -54,4 +54,12 @@ class A {
 		d.field1 = 3;
 		d.method1();
 	}
+	int sum2(int ... values) {
+		int sum2 = 0;
+		int result = sum2(1,2,3);
+		int result = sum2(1,2,3,4,5);
+		
+	}
+	
 }
+
